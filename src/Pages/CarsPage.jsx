@@ -6,7 +6,7 @@ import { CarsList } from "../modules/CarList/CarLIst";
 
 export const CarsPage = () => {
   const [cars, setCars] = useState([]);
-//   const [currentCars, setCurrentCars] = useState([]);
+  
 
   useEffect(() => {
     (async () => {
@@ -14,7 +14,11 @@ export const CarsPage = () => {
       setCars(data);
     })();
   }, []);
-    return <div>
+
+
+  return (
+    <div>
       <CarsList cars={cars} />
-  </div>;
+    </div>
+  );
 };

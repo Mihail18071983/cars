@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import PropTypes from 'prop-types';
+import TableFilter from "react-table-filter";
+import "react-table-filter/lib/styles.css";
+
+import PropTypes from "prop-types";
 
 import { Pagination } from "../../shared/components/pagination/Pagination";
 
@@ -24,20 +27,24 @@ export const CarsList = ({ cars }) => {
     setCurrentPage(event.selected + 1);
   }, []);
 
+  const filterUpdated = (newData, filtersObject) => {
+    setItems(newData);
+  };
+
   return (
     <div>
       <table>
         <thead>
-          <tr>
-            <th>Company</th>
-            <th>Model</th>
-            <th>VIN</th>
-            <th>Color</th>
-            <th>Year</th>
-            <th>Price</th>
-            <th>Availability</th>
-            <th>Actions</th>
-          </tr>
+          <TableFilter rows={items} onFilterUpdate={filterUpdated}>
+           <th key="company" filterkey="car">Company</th>
+            <th key="model" filterkey="car_model">Model</th>
+            <th key="vin" filterkey="car_vin">VIN</th>
+            <th key="color" filterkey="car_color">Color</th>
+            <th key="year" filterkey="car_model_year">Year</th>
+            <th key="price" filterkey="price">Price</th>
+            <th key="availability" filterkey="availability">Availability</th>
+            <th key="actions">Actions</th>
+          </TableFilter>
         </thead>
         <tbody>
           {items.length > 0 &&
@@ -51,8 +58,9 @@ export const CarsList = ({ cars }) => {
                 <td>{car.price}</td>
                 {car.availability ? <td>available</td> : <td> unavailable</td>}
                 <td>
-                  <CarActions car={car} />
-                </td>
+                <CarActions car={car} />
+              </td>
+               
               </tr>
             ))}
         </tbody>
@@ -69,6 +77,21 @@ export const CarsList = ({ cars }) => {
   );
 };
 
+CarsList.propTypes = {
+  cars: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      car: PropTypes.string.isRequired,
+      car_model: PropTypes.string.isRequired,
+      car_vin: PropTypes.string.isRequired,
+      car_color: PropTypes.string.isRequired,
+      car_model_year: PropTypes.number.isRequired,
+      price: PropTypes.string.isRequired,
+      availability: PropTypes.bool.isRequired,
+    })
+  ),
+};
+
 CarsList.defaultProps = {
-  list: [],
+  cars: [],
 };

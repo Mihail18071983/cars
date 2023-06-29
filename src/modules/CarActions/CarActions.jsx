@@ -17,10 +17,10 @@ export const CarActions = ({ car }) => {
       <button onClick={handleEdit}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
 
-      {showEditModal && <EditModal car={car} onClose={() => setShowEditModal(false)} />}
+      {/* {showEditModal && <EditModal car={car} onClose={() => setShowEditModal(false)} />}
       {showDeleteModal && (
         <DeleteModal car={car} onClose={() => setShowDeleteModal(false)} />
-      )}
+      )} */}
     </div>
   );
 };
