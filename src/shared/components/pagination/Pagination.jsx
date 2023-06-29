@@ -1,13 +1,11 @@
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 
-import * as pagination from "./Pagination.styled"
-
-
+import styles from './pagination.module.scss';
 
 export const Pagination = ({ onPageClick, pageCount = 1, currentPage = 1 }) => {
     return (
-        <div className={pagination.PaginatioContainer}>
+        <div className={styles.paginationContainer}>
             <ReactPaginate
                 nextLabel=""
                 onPageChange={onPageClick}
@@ -15,17 +13,18 @@ export const Pagination = ({ onPageClick, pageCount = 1, currentPage = 1 }) => {
                 marginPagesDisplayed={1}
                 pageCount={pageCount}
                 previousLabel=""
-                pageClassName={pagination.item}
-                pageLinkClassName={pagination.link}
-                previousClassName={pagination.item}
-                previousLinkClassName={pagination.prevLink}
-                nextClassName={pagination.item}
-                nextLinkClassName={pagination.nextLink}
+                pageClassName={styles.item}
+                pageLinkClassName={styles.link}
+                previousClassName={styles.item}
+                previousLinkClassName={styles.prevLink}
+                nextClassName={styles.item}
+                nextLinkClassName={styles.nextLink}
                 breakLabel="..."
-                breakClassName={pagination.item}
-                breakLinkClassName={pagination.link}
-                activeClassName={pagination.active}
+                breakClassName={styles.item}
+                breakLinkClassName={styles.link}
+                activeClassName={styles.active}
                 renderOnZeroPageCount={null}
+                className={styles.pagination}
                 forcePage={currentPage - 1}
             />
         </div>
@@ -37,5 +36,7 @@ Pagination.propTypes = {
     pageCount: PropTypes.number.isRequired,
     currentPage: PropTypes.number,
 };
+
+
 
 

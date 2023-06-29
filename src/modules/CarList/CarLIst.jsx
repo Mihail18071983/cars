@@ -1,52 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+// import PropTypes from 'prop-types';
 
-import { getAllCars } from "../../shared/api/api";
-// import { Pagination } from '../../shared/components/pagination/Pagination';
+import { Pagination } from "../../shared/components/pagination/Pagination";
 
 import { CarActions } from "../CarActions/CarActions";
 
-export const CarList = () => {
-  const [cars, setCars] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
+const carsPerPage = 30;
 
-  // const carsPerPage = 20;
-  // const totalPages = Math.ceil(cars.length / carsPerPage);
-  // const indexOfLastCar = currentPage * carsPerPage;
-  // const indexOfFirstCar = indexOfLastCar - carsPerPage;
-  // const currentCars = cars.length > 0 ? cars.slice(indexOfFirstCar, indexOfLastCar):[];
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    // setCurrentPage(1);
-  };
-
-  // const handlePageChange = (selectedPage) => {
-  //   setCurrentPage(selectedPage);
-  // };
+export const CarsList = ({ cars }) => {
+  const [items, setItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const data = await getAllCars();
-        setCars([ ...data]);
-      } catch (error) {
-        console.error("Error fetching car data:", error);
-      }
-    };
+    setPageCount(Math.ceil(cars.length / carsPerPage));
+    const startOffset = (currentPage * carsPerPage) % cars.length;
+    const endOffset = startOffset + carsPerPage;
+    const paginatedCars = cars.slice(startOffset, endOffset);
+    setItems(paginatedCars);
+  }, [currentPage, cars]);
 
-    fetchCars();
+  const onPageClick = useCallback((event) => {
+    setCurrentPage(event.selected + 1);
   }, []);
 
   return (
     <div>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={handleSearch}
-        placeholder="Search cars..."
-      />
-
       <table>
         <thead>
           <tr>
@@ -61,14 +40,8 @@ export const CarList = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {currentCars
-            .filter((car) =>
-              `${car.company} ${car.model} ${car.vin} ${car.color} ${car.year} ${car.price} ${car.availability}`
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())
-            ) */}
-          {cars.length > 0 ? (
-            cars.map((car) => (
+          {items.length > 0 &&
+            items.map((car) => (
               <tr key={car.id}>
                 <td>{car.car}</td>
                 <td>{car.car_model}</td>
@@ -76,27 +49,26 @@ export const CarList = () => {
                 <td>{car.car_color}</td>
                 <td>{car.car_model_year}</td>
                 <td>{car.price}</td>
-                <td>{car.availability}</td>
+                {car.availability ? <td>available</td> : <td> unavailable</td>}
                 <td>
                   <CarActions car={car} />
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="8">Loading cars...</td>
-            </tr>
-          )}
+            ))}
         </tbody>
       </table>
 
-      {/* {cars.length > 0 && (
+      {pageCount > 1 && (
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
+          pageCount={pageCount}
+          onPageClick={onPageClick}
         />
-      )} */}
+      )}
     </div>
   );
+};
+
+CarsList.defaultProps = {
+  list: [],
 };
