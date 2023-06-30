@@ -1,97 +1,134 @@
-import React, { useState, useEffect, useCallback } from "react";
-import TableFilter from "react-table-filter";
-import "react-table-filter/lib/styles.css";
+import React, { useMemo } from "react";
+import {
+  useTable,
+  usePagination,
+  useFilters,
+  useGlobalFilter,
+} from "react-table";
 
-import PropTypes from "prop-types";
-
-import { Pagination } from "../../shared/components/pagination/Pagination";
-
+import { GlobalFilter } from "shared/components/GlobalFilter/ClobalFilter";
 import { CarActions } from "../CarActions/CarActions";
 
-const carsPerPage = 30;
+export const CarsTable = ({ cars }) => {
+  const data = useMemo(() => cars, [cars]);
 
-export const CarsList = ({ cars }) => {
-  const [items, setItems] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Company",
+        accessor: "car",
+      },
+      {
+        Header: "Model",
+        accessor: "car_model",
+      },
+      {
+        Header: "VIN",
+        accessor: "car_vin",
+      },
+      {
+        Header: "Color",
+        accessor: "car_color",
+      },
+      {
+        Header: "Year",
+        accessor: "car_model_year",
+      },
+      {
+        Header: "Price",
+        accessor: "price",
+      },
+      {
+        Header: "Availability",
+        accessor: "availability",
+        Cell: ({ value }) => (value ? "available" : "unavailable"),
+      },
+      {
+        Header: "Actions",
+        accessor: "id",
+        Cell: ({ value }) => <CarActions carId={value} />,
+      },
+    ],
+    []
+  );
 
-  useEffect(() => {
-    setPageCount(Math.ceil(cars.length / carsPerPage));
-    const startOffset = (currentPage * carsPerPage) % cars.length;
-    const endOffset = startOffset + carsPerPage;
-    const paginatedCars = cars.slice(startOffset, endOffset);
-    setItems(paginatedCars);
-  }, [currentPage, cars]);
-
-  const onPageClick = useCallback((event) => {
-    setCurrentPage(event.selected + 1);
-  }, []);
-
-  const filterUpdated = (newData, filtersObject) => {
-    setItems(newData);
-  };
+  const {
+    gotoPage,
+    getTableProps,
+    pageCount,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
+    globalFilter,
+    setGlobalFilter,
+    preGlobalFilteredRows,
+    state: { pageIndex },
+  } = useTable(
+    { columns, data, initialState: { pageIndex: 0 } },
+    useFilters,
+    useGlobalFilter,
+    usePagination
+  );
 
   return (
-    <div>
-      <table>
+    <>
+      <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        setGlobalFilter={setGlobalFilter}
+        globalFilter={globalFilter}
+      />
+      <table {...getTableProps()}>
         <thead>
-          <TableFilter rows={items} onFilterUpdate={filterUpdated}>
-           <th key="company" filterkey="car">Company</th>
-            <th key="model" filterkey="car_model">Model</th>
-            <th key="vin" filterkey="car_vin">VIN</th>
-            <th key="color" filterkey="car_color">Color</th>
-            <th key="year" filterkey="car_model_year">Year</th>
-            <th key="price" filterkey="price">Price</th>
-            <th key="availability" filterkey="availability">Availability</th>
-            <th key="actions">Actions</th>
-          </TableFilter>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        <tbody>
-          {items.length > 0 &&
-            items.map((car) => (
-              <tr key={car.id}>
-                <td>{car.car}</td>
-                <td>{car.car_model}</td>
-                <td>{car.car_vin}</td>
-                <td>{car.car_color}</td>
-                <td>{car.car_model_year}</td>
-                <td>{car.price}</td>
-                {car.availability ? <td>available</td> : <td> unavailable</td>}
-                <td>
-                <CarActions car={car} />
-              </td>
-               
+        <tbody {...getTableBodyProps()}>
+          {page.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                ))}
               </tr>
-            ))}
+            );
+          })}
         </tbody>
       </table>
+      <div>
+  <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+    {"<<"}
+  </button>
+  <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+    {"<"}
+  </button>
+  {pageIndex > 2 && <button onClick={() => gotoPage(pageIndex - 2)}>{pageIndex - 1}</button>}
+  {pageIndex > 1 && <button onClick={() => gotoPage(pageIndex - 1)}>{pageIndex}</button>}
+  <button onClick={() => gotoPage(pageIndex)} disabled>
+    {pageIndex + 1}
+  </button>
+  {pageIndex < pageCount - 2 && <button onClick={() => gotoPage(pageIndex + 1)}>{pageIndex + 2}</button>}
+  {pageIndex < pageCount - 3 && <button onClick={() => gotoPage(pageIndex + 2)}>{pageIndex + 3}</button>}
+  {pageIndex < pageCount - 3 && <button disabled>...</button>}
+  {pageIndex < pageCount - 3 && <button onClick={() => gotoPage(pageCount - 1)}>{pageCount}</button>}
+  <button onClick={() => nextPage()} disabled={!canNextPage}>
+    {">"}
+  </button>
+  <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+    {">>"}
+  </button>
+</div>
 
-      {pageCount > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          pageCount={pageCount}
-          onPageClick={onPageClick}
-        />
-      )}
-    </div>
+    </>
   );
-};
-
-CarsList.propTypes = {
-  cars: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      car: PropTypes.string.isRequired,
-      car_model: PropTypes.string.isRequired,
-      car_vin: PropTypes.string.isRequired,
-      car_color: PropTypes.string.isRequired,
-      car_model_year: PropTypes.number.isRequired,
-      price: PropTypes.string.isRequired,
-      availability: PropTypes.bool.isRequired,
-    })
-  ),
-};
-
-CarsList.defaultProps = {
-  cars: [],
 };
