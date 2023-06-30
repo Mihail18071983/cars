@@ -67,9 +67,9 @@ export const CarsTable = ({ cars }) => {
     globalFilter,
     setGlobalFilter,
     preGlobalFilteredRows,
-    state: { pageIndex },
+    state: { pageIndex, pageSize },
   } = useTable(
-    { columns, data, initialState: { pageIndex: 0 } },
+    { columns, data, initialState: { pageIndex: 0, pageSize:20 } },
     useFilters,
     useGlobalFilter,
     usePagination
@@ -106,29 +106,44 @@ export const CarsTable = ({ cars }) => {
         </tbody>
       </table>
       <div>
-  <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-    {"<<"}
-  </button>
-  <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-    {"<"}
-  </button>
-  {pageIndex > 2 && <button onClick={() => gotoPage(pageIndex - 2)}>{pageIndex - 1}</button>}
-  {pageIndex > 1 && <button onClick={() => gotoPage(pageIndex - 1)}>{pageIndex}</button>}
-  <button onClick={() => gotoPage(pageIndex)} disabled>
-    {pageIndex + 1}
-  </button>
-  {pageIndex < pageCount - 2 && <button onClick={() => gotoPage(pageIndex + 1)}>{pageIndex + 2}</button>}
-  {pageIndex < pageCount - 3 && <button onClick={() => gotoPage(pageIndex + 2)}>{pageIndex + 3}</button>}
-  {pageIndex < pageCount - 3 && <button disabled>...</button>}
-  {pageIndex < pageCount - 3 && <button onClick={() => gotoPage(pageCount - 1)}>{pageCount}</button>}
-  <button onClick={() => nextPage()} disabled={!canNextPage}>
-    {">"}
-  </button>
-  <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-    {">>"}
-  </button>
-</div>
-
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>
+        {pageIndex > 2 && (
+          <button onClick={() => gotoPage(pageIndex - 2)}>
+            {pageIndex - 1}
+          </button>
+        )}
+        {pageIndex > 1 && (
+          <button onClick={() => gotoPage(pageIndex - 1)}>{pageIndex}</button>
+        )}
+        <button onClick={() => gotoPage(pageIndex)} disabled>
+          {pageIndex + 1}
+        </button>
+        {pageIndex < pageCount - 2 && (
+          <button onClick={() => gotoPage(pageIndex + 1)}>
+            {pageIndex + 2}
+          </button>
+        )}
+        {pageIndex < pageCount - 3 && (
+          <button onClick={() => gotoPage(pageIndex + 2)}>
+            {pageIndex + 3}
+          </button>
+        )}
+        {pageIndex < pageCount - 3 && <button disabled>...</button>}
+        {pageIndex < pageCount - 3 && (
+          <button onClick={() => gotoPage(pageCount - 1)}>{pageCount}</button>
+        )}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>
+      </div>
     </>
   );
 };
