@@ -67,7 +67,7 @@ export const CarsTable = ({ cars }) => {
     globalFilter,
     setGlobalFilter,
     preGlobalFilteredRows,
-    state: { pageIndex, pageSize },
+    state: { pageIndex }
   } = useTable(
     { columns, data, initialState: { pageIndex: 0, pageSize:20 } },
     useFilters,
