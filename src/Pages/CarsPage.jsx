@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-import { getAllCars } from "../shared/api/api";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchCars } from "redux/cars/cars-operation";
+
+import { selectCars } from "redux/cars/cars-selectors";
 
 import { CarsTable } from "modules/CarList/CarLIst";
 
 export const CarsPage = () => {
-  const [cars, setCars] = useState(JSON.parse(localStorage.getItem('cars')) || []);
+  const dispatch = useDispatch();
+  const cars = useSelector(selectCars);
+
   useEffect(() => {
     (async () => {
-      if (cars.length>0) return
-      const data = await getAllCars();
-      localStorage.setItem('cars', JSON.stringify(data))
-      setCars(data);
+      if (cars.length === 0)
+      dispatch(fetchCars());
     })();
-  }, [cars.length]);
-
+  }, [cars.length, dispatch]);
 
   return (
     <div>
