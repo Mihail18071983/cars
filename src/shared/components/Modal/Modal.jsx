@@ -1,31 +1,38 @@
-import React, { useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
+import styles from '../Modal/Modal.module.scss';
+import { CgClose } from 'react-icons/cg';
 
-import styles from "./Modal.module.scss"
+const modalRoot = document.querySelector('#modal-root');
 
-export const Modal = ({ onCloseModal, children }) => {
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === "Escape") {
-        onCloseModal();
+export const Modal = ({ children, close }) => {
+
+    const closeModal = useCallback(({ target, currentTarget, code }) => {
+      if (target === currentTarget || code === 'Escape') {
+        close();
       }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [onCloseModal]);
+    },[close]);
 
-  const backdpropClickHandler = (e) => {
-    if (e.currentTarget === e.target) {
-      onCloseModal();
-    }
-  };
+  useEffect(() => {
+    window.addEventListener('keydown', closeModal);
+     return ()=> window.removeEventListener('keydown', closeModal);
+  }, [closeModal]);
+
 
   return createPortal(
-      <div className={styles.modal__container} onClick={backdpropClickHandler}>
-          <div className={styles.modal}>{children}</div>
+    <div className={styles.Overlay} onClick={closeModal}>
+      <div className={styles.Modal}>
+        <button
+          type="button"
+          aria-label="close button"
+          className={styles.close}
+          onClick={close}
+        >
+          <CgClose />
+        </button>
+        {children}
+      </div>
     </div>,
-    document.querySelector("#modal-root")
+    modalRoot
   );
 };
