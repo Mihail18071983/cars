@@ -46,7 +46,7 @@ export const CarsTable = ({ cars }) => {
       {
         Header: "Actions",
         accessor: "id",
-        Cell: ({ value }) => <CarActions carId={value} />,
+        Cell: ({ value }) => <CarActions id={value} />,
       },
     ],
     []

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal } from "shared/components/Modal/Modal";
+import { EditModalForm } from "shared/components/EditModal/EditModal";
 
-export const CarActions = () => {
+export const CarActions = ({id}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = () => {
@@ -18,16 +19,7 @@ export const CarActions = () => {
       <button onClick={handleModal}>Delete</button>
       {showModal && (
         <Modal close={closeModal}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-            neque sapiente, error aliquid repellendus nisi illum quisquam
-            impedit ea voluptate quae earum quia tempora ad dolores, quo autem
-            qui delectus, ratione similique optio quos ipsa tenetur commodi!
-            Quas ad aliquam atque, velit aspernatur numquam accusantium ipsa
-            ipsum culpa dolor quidem autem recusandae dolore laboriosam, vel
-            minima harum eius ab nisi aliquid aperiam. Sit id natus totam quam
-            officia magnam expedita!
-          </p>
+          <EditModalForm carID={id} onClose={ closeModal} />
         </Modal>
       )}
     </div>

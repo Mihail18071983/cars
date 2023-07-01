@@ -1,42 +1,66 @@
-import React, { useState } from 'react';
-import { updateCar } from '../../utils/carUpdate'; 
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCars } from "redux/cars/cars-selectors";
+import { updateCarInfo } from "../../../redux/cars/cars.slice";
 
-export const EditModal = ({ car, onClose, cars, setCars }) => {
-  const [color, setColor] = useState(car.color);
-  const [price, setPrice] = useState(car.price);
-  const [availability, setAvailability] = useState(car.availability);
+export const EditModalForm = ({ carID, onClose }) => {
+  const cars = useSelector(selectCars);
+  const car = cars.filter((item) => item.id === carID)[0];
 
-  const handleSave = async () => {
+  const { car_color: color, price, availability } = car;
+
+  const [carColor, setCarColor] = useState(color);
+  const [carPrice, setCarPrice] = useState(price);
+  const [carAvailability, setCarAvailability] = useState(availability);
+  const dispatch = useDispatch();
+
+  const handleSave = () => {
     try {
-      // Call the updateCar function to save the changes made to the car data
-      await updateCar(car.id, { color, price, availability }, cars, setCars);
+      dispatch(
+        updateCarInfo({
+          ...car,
+          car_color: carColor,
+          price: carPrice,
+          availability: carAvailability,
+        })
+      );
       onClose();
     } catch (error) {
-      console.error('Error updating car:', error);
+      console.error("Error updating car:", error);
     }
   };
 
   return (
-    <div>
+    <form onSubmit={handleSave}>
       <h2>Edit Car</h2>
       <label>
         Color:
-        <input type="text" value={color} onChange={(e) => setColor(e.target.value)} />
+        <input
+          type="text"
+          value={carColor}
+          onChange={(e) => setCarColor(e.target.value)}
+        />
       </label>
       <label>
         Price:
-        <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input
+          type="text"
+          value={carPrice}
+          onChange={(e) => setCarPrice(e.target.value)}
+        />
       </label>
       <label>
         Availability:
         <input
           type="text"
-          value={availability}
-          onChange={(e) => setAvailability(e.target.value)}
+          value={carAvailability}
+          onChange={(e) => setCarAvailability(e.target.value)}
         />
       </label>
-      <button onClick={handleSave}>Save</button>
-      <button onClick={onClose}>Cancel</button>
-    </div>
+      <button type="submit">Save</button>
+      <button type="button" onClick={onClose}>
+        Cancel
+      </button>
+    </form>
   );
 };

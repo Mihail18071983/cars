@@ -3,6 +3,7 @@ import { fetchCars } from "./cars-operation";
 
 const carsInitialState = {
   items: JSON.parse(localStorage.getItem("cars")) || [],
+  // items: [],
   error: null,
 };
 
@@ -17,10 +18,12 @@ const carsSlice = createSlice({
       state.items.splice(idx, 1);
     },
     updateCarInfo(state, action) {
+      console.log(action.payload)
       const idx = state.items.findIndex(
         (item) => item.id === action.payload.id
       );
       state.items.splice(idx, 1, action.payload);
+      localStorage.setItem("cars", JSON.stringify(state.items));
     },
   },
   extraReducers: (builder) => {
