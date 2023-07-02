@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCars } from "redux/cars/cars-selectors";
 import { updateCarInfo } from "../../../redux/cars/cars.slice";
 
-export const EditModalForm = ({ carID, onClose }) => {
+export const EditCarForm = ({ carID, onClose }) => {
   const cars = useSelector(selectCars);
   const car = cars.filter((item) => item.id === carID)[0];
 

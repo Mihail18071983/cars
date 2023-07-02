@@ -9,21 +9,20 @@ const carsInitialState = {
 
 const carsSlice = createSlice({
   name: "cars",
-  initialState: { ...carsInitialState, },
+  initialState: { ...carsInitialState },
   reducers: {
     removeCar(state, action) {
-      const idx = state.items.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      state.items.splice(idx, 1);
+      state.items = state.items.filter(({ id }) => id !== action.payload);
+      localStorage.setItem("cars", JSON.stringify(state.items));
+      alert('Car information successfully deleted from database');
     },
     updateCarInfo(state, action) {
-      console.log(action.payload);
       const idx = state.items.findIndex(
         (item) => item.id === action.payload.id
       );
       state.items.splice(idx, 1, action.payload);
       localStorage.setItem("cars", JSON.stringify(state.items));
+      alert("Car information successfully updated in database");
     },
   },
   extraReducers: (builder) => {

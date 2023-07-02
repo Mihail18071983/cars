@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Modal } from "shared/components/Modal/Modal";
-import { EditModalForm } from "shared/components/EditModal/EditModal";
+import { EditCarForm } from "shared/components/EditCar/EditCarForm";
+import { DeleteCar } from "shared/components/DeleteCar/DeleteCar";
 
-export const CarActions = ({id}) => {
+export const CarActions = ({ id }) => {
   const [showModal, setShowModal] = useState(false);
+  const [selectedActionType, setSelectedActionType] = useState(null);
 
-  const handleModal = () => {
+  const handleModal = (action) => {
+    setSelectedActionType(action);
     setShowModal(true);
   };
 
@@ -15,11 +18,16 @@ export const CarActions = ({id}) => {
 
   return (
     <div>
-      <button onClick={handleModal}>Edit</button>
-      <button onClick={handleModal}>Delete</button>
+      <button onClick={() => handleModal("edit")}>Edit</button>
+      <button onClick={() => handleModal("delete")}>Delete</button>
       {showModal && (
         <Modal close={closeModal}>
-          <EditModalForm carID={id} onClose={ closeModal} />
+          {selectedActionType === "edit" && (
+            <EditCarForm carID={id} onClose={closeModal} />
+          )}
+          {selectedActionType === "delete" && (
+            <DeleteCar carID={id} onClose={closeModal} />
+          )}
         </Modal>
       )}
     </div>
