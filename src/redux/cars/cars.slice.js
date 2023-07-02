@@ -9,7 +9,7 @@ const carsInitialState = {
 
 const carsSlice = createSlice({
   name: "cars",
-  initialState: carsInitialState,
+  initialState: { ...carsInitialState, },
   reducers: {
     removeCar(state, action) {
       const idx = state.items.findIndex(
@@ -18,7 +18,7 @@ const carsSlice = createSlice({
       state.items.splice(idx, 1);
     },
     updateCarInfo(state, action) {
-      console.log(action.payload)
+      console.log(action.payload);
       const idx = state.items.findIndex(
         (item) => item.id === action.payload.id
       );

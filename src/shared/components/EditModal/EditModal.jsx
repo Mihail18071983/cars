@@ -8,7 +8,6 @@ export const EditModalForm = ({ carID, onClose }) => {
   const car = cars.filter((item) => item.id === carID)[0];
 
   const { car_color: color, price, availability } = car;
-
   const [carColor, setCarColor] = useState(color);
   const [carPrice, setCarPrice] = useState(price);
   const [carAvailability, setCarAvailability] = useState(availability);
@@ -51,11 +50,17 @@ export const EditModalForm = ({ carID, onClose }) => {
       </label>
       <label>
         Availability:
-        <input
-          type="text"
+        <select
           value={carAvailability}
-          onChange={(e) => setCarAvailability(e.target.value)}
-        />
+          onChange={(e) => {
+            const value =e.target.value==="true"
+            setCarAvailability(value);
+            console.log(value);
+          }}
+        >
+          <option value={true}>available</option>
+          <option value={false}>unavailable</option>
+        </select>
       </label>
       <button type="submit">Save</button>
       <button type="button" onClick={onClose}>
