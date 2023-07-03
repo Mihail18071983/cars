@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
+import PropTypes from "prop-types";
+
 import styles from "./GlobalFilter.module.scss";
+
 export const GlobalFilter = ({
   preGlobalFilteredRows,
   globalFilter,
@@ -27,3 +30,10 @@ export const GlobalFilter = ({
     </label>
   );
 };
+
+GlobalFilter.propTypes = {
+  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape),
+  globalFilter: PropTypes.func,
+  setGlobalFilter:PropTypes.func.isRequired,
+
+}

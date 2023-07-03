@@ -101,6 +101,7 @@ export const CarsTable = ({ cars }) => {
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
+            console.log("page", page)
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -112,15 +113,17 @@ export const CarsTable = ({ cars }) => {
           })}
         </tbody>
       </table>
-      <Pagination
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        canPreviousPage={canPreviousPage}
-        pageCount={pageCount}
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        pageIndex={pageIndex}
-      />
+      {page.length === 20 && (
+        <Pagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          pageIndex={pageIndex}
+        />
+      )}
     </>
   );
 };
