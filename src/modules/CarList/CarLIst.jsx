@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import PropTypes from 'prop-types';
+import { Pagination } from "shared/components/pagination/Pagination";
+import PropTypes from "prop-types";
 import {
   useTable,
   usePagination,
@@ -9,6 +10,7 @@ import {
 
 import { GlobalFilter } from "shared/components/GlobalFilter/ClobalFilter";
 import { CarActions } from "../CarActions/CarActions";
+import styles from "./CarsLIst.module.scss";
 
 export const CarsTable = ({ cars }) => {
   const data = useMemo(() => cars, [cars]);
@@ -47,7 +49,11 @@ export const CarsTable = ({ cars }) => {
       {
         Header: "Actions",
         accessor: "id",
-        Cell: ({ value }) => <CarActions id={value} />,
+        Cell: ({ value }) => (
+          <div className={styles.actionsWrapper}>
+            <CarActions id={value} />
+          </div>
+        ),
       },
     ],
     []
@@ -68,9 +74,9 @@ export const CarsTable = ({ cars }) => {
     globalFilter,
     setGlobalFilter,
     preGlobalFilteredRows,
-    state: { pageIndex }
+    state: { pageIndex },
   } = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize:20 } },
+    { columns, data, initialState: { pageIndex: 0, pageSize: 20 } },
     useFilters,
     useGlobalFilter,
     usePagination
@@ -83,7 +89,7 @@ export const CarsTable = ({ cars }) => {
         setGlobalFilter={setGlobalFilter}
         globalFilter={globalFilter}
       />
-      <table {...getTableProps()}>
+      <table className={styles.table} {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -106,45 +112,15 @@ export const CarsTable = ({ cars }) => {
           })}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>
-        {pageIndex > 2 && (
-          <button onClick={() => gotoPage(pageIndex - 2)}>
-            {pageIndex - 1}
-          </button>
-        )}
-        {pageIndex > 1 && (
-          <button onClick={() => gotoPage(pageIndex - 1)}>{pageIndex}</button>
-        )}
-        <button onClick={() => gotoPage(pageIndex)} disabled>
-          {pageIndex + 1}
-        </button>
-        {pageIndex < pageCount - 2 && (
-          <button onClick={() => gotoPage(pageIndex + 1)}>
-            {pageIndex + 2}
-          </button>
-        )}
-        {pageIndex < pageCount - 3 && (
-          <button onClick={() => gotoPage(pageIndex + 2)}>
-            {pageIndex + 3}
-          </button>
-        )}
-        {pageIndex < pageCount - 3 && <button disabled>...</button>}
-        {pageIndex < pageCount - 3 && (
-          <button onClick={() => gotoPage(pageCount - 1)}>{pageCount}</button>
-        )}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>
-      </div>
+      <Pagination
+        gotoPage={gotoPage}
+        previousPage={previousPage}
+        canPreviousPage={canPreviousPage}
+        pageCount={pageCount}
+        canNextPage={canNextPage}
+        nextPage={nextPage}
+        pageIndex={pageIndex}
+      />
     </>
   );
 };
