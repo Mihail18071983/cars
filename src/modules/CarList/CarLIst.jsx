@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import PropTypes from 'prop-types';
 import {
   useTable,
   usePagination,
@@ -147,3 +148,9 @@ export const CarsTable = ({ cars }) => {
     </>
   );
 };
+
+CarsTable.propTypes = {
+  cars: PropTypes.array.isRequired,
+};
+
+CarsTable.defaultProps = [];

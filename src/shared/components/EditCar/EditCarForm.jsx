@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCars } from "redux/cars/cars-selectors";
 import { updateCarInfo } from "../../../redux/cars/cars.slice";
+import PropTypes from 'prop-types';
 
 export const EditCarForm = ({ carID, onClose }) => {
   const cars = useSelector(selectCars);
@@ -69,3 +70,8 @@ export const EditCarForm = ({ carID, onClose }) => {
     </form>
   );
 };
+
+EditCarForm.propTypes = {
+  carID: PropTypes.number.isRequired,
+  onClose:PropTypes.func.isRequired
+}

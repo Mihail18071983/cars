@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCars } from "redux/cars/cars-selectors";
 import { removeCar } from "../../../redux/cars/cars.slice";
 import styles from "./DeleteCar.module.scss";
+import PropTypes from 'prop-types';
 
 export const DeleteCar = ({ carID, onClose }) => {
   const dispatch = useDispatch();
@@ -37,3 +38,8 @@ export const DeleteCar = ({ carID, onClose }) => {
     </div>
   );
 };
+
+DeleteCar.propTypes = {
+  carID: PropTypes.number.isRequired,
+  onClose:PropTypes.func.isRequired
+}

@@ -2,6 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styles from '../Modal/Modal.module.scss';
 import { CgClose } from 'react-icons/cg';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -36,3 +37,8 @@ export const Modal = ({ children, close }) => {
     modalRoot
   );
 };
+
+Modal.propTypes = {
+  close: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+}
