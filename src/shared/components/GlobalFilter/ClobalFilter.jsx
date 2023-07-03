@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
-
+import styles from "./GlobalFilter.module.scss";
 export const GlobalFilter = ({
   preGlobalFilteredRows,
   globalFilter,
@@ -13,16 +13,16 @@ export const GlobalFilter = ({
   }, 300);
 
   return (
-      <label>     
-     Search:
+    <label className={styles.label}>
+      Search:
       <input
         type="text"
         value={value || ""}
         onChange={(e) => {
-            setValue(e.target.value);
-            onChange(e.target.value);
-              }}
-              placeholder={`${count} records...`}
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
       />
     </label>
   );
