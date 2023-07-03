@@ -3,6 +3,7 @@ import { Modal } from "shared/components/Modal/Modal";
 import { EditCarForm } from "shared/components/EditCar/EditCarForm";
 import { DeleteCar } from "shared/components/DeleteCar/DeleteCar";
 import PropTypes from 'prop-types';
+import styles from './CarActions.module.scss'
 
 export const CarActions = ({ id }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,7 @@ export const CarActions = ({ id }) => {
   };
 
   return (
-    <div>
+    <div className={styles.actions}>
       <button onClick={() => handleModal("edit")}>Edit</button>
       <button onClick={() => handleModal("delete")}>Delete</button>
       {showModal && (

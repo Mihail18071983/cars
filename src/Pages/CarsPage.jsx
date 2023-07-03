@@ -10,6 +10,7 @@ import { CarsTable } from "modules/CarList/CarLIst";
 import { PageTitle } from "shared/components/PageTitle/PageTitle";
 import { Modal } from "shared/components/Modal/Modal";
 import { AddCarForm } from "shared/components/AddCarForm/AddCarForm";
+import styles from "./CarPage.module.scss";
 
 export const CarsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -31,17 +32,23 @@ export const CarsPage = () => {
   }, [cars.length, dispatch]);
 
   return (
-    <div>
-      <PageTitle text="Table of Cars" />
-      <button type="button" onClick={handleModal}>
-        Add car
-      </button>
+    <section className={styles.section}>
+      <div className={styles.wrapper}>
+        <PageTitle text="Table of Cars" />
+        <button
+          className={styles.addCarBtn}
+          type="button"
+          onClick={handleModal}
+        >
+          Add car
+        </button>
+      </div>
       <CarsTable cars={cars} />
       {showModal && (
         <Modal close={onCloseModal}>
           <AddCarForm />
         </Modal>
       )}
-    </div>
+    </section>
   );
 };

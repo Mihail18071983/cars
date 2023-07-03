@@ -14,11 +14,12 @@ const carsSlice = createSlice({
     addCar(state, action) {
       state.items.unshift(action.payload);
       localStorage.setItem("cars", JSON.stringify(state.items));
+      alert("Car information successfully added to the database!");
     },
     removeCar(state, action) {
       state.items = state.items.filter(({ id }) => id !== action.payload);
       localStorage.setItem("cars", JSON.stringify(state.items));
-      alert("Car information successfully deleted from database");
+      alert("Car information successfully deleted from database!");
     },
     updateCarInfo(state, action) {
       const idx = state.items.findIndex(
@@ -26,7 +27,7 @@ const carsSlice = createSlice({
       );
       state.items.splice(idx, 1, action.payload);
       localStorage.setItem("cars", JSON.stringify(state.items));
-      alert("Car information successfully updated in database");
+      alert("Car information successfully updated in database!");
     },
   },
   extraReducers: (builder) => {

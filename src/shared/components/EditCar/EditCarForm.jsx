@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCars } from "redux/cars/cars-selectors";
 import { updateCarInfo } from "../../../redux/cars/cars.slice";
-import PropTypes from 'prop-types';
-
+import PropTypes from "prop-types";
+import styles from "./EditCarForm.module.scss";
 export const EditCarForm = ({ carID, onClose }) => {
   const cars = useSelector(selectCars);
   const car = cars.filter((item) => item.id === carID)[0];
@@ -31,30 +31,30 @@ export const EditCarForm = ({ carID, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSave}>
+    <form className={styles.form} onSubmit={handleSave}>
       <h2>Edit Car</h2>
-      <label>
+      <label className={styles.label}>
         Color:
-        <input
+        <input className={styles.input}
           type="text"
           value={carColor}
           onChange={(e) => setCarColor(e.target.value)}
         />
       </label>
-      <label>
+      <label className={styles.label}>
         Price:
-        <input
+        <input className={styles.input}
           type="text"
           value={carPrice}
           onChange={(e) => setCarPrice(e.target.value)}
         />
       </label>
-      <label>
+      <label className={styles.label}>
         Availability:
         <select
           value={carAvailability}
           onChange={(e) => {
-            const value =e.target.value==="true"
+            const value = e.target.value === "true";
             setCarAvailability(value);
             console.log(value);
           }}
@@ -63,15 +63,17 @@ export const EditCarForm = ({ carID, onClose }) => {
           <option value={false}>unavailable</option>
         </select>
       </label>
-      <button type="submit">Save</button>
-      <button type="button" onClick={onClose}>
-        Cancel
-      </button>
+      <div className={styles.wrapper}>
+        <button type="submit">Save</button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
 
 EditCarForm.propTypes = {
   carID: PropTypes.number.isRequired,
-  onClose:PropTypes.func.isRequired
-}
+  onClose: PropTypes.func.isRequired,
+};
