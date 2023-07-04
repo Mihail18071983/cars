@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "shared/components/Modal/Modal";
 import { EditCarForm } from "shared/components/EditCar/EditCarForm";
 import { DeleteCar } from "shared/components/DeleteCar/DeleteCar";
+import { hideScroll } from "shared/utils/hideScroll";
 import PropTypes from 'prop-types';
 
 export const CarActions = ({ id }) => {
@@ -16,6 +17,8 @@ export const CarActions = ({ id }) => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  hideScroll(showModal)
 
   return (
     <>

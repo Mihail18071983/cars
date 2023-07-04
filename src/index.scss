@@ -28,7 +28,6 @@ button {
   cursor: pointer;
   border-radius: 5px;
   max-width: 100px;
-
 }
 
 input, select, textarea {
@@ -38,4 +37,8 @@ input, select, textarea {
     border-radius: 2px;
     border-width: 0.2px;
   }
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }

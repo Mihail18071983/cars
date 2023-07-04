@@ -10,6 +10,7 @@ import { CarsTable } from "modules/CarList/CarLIst";
 import { PageTitle } from "shared/components/PageTitle/PageTitle";
 import { Modal } from "shared/components/Modal/Modal";
 import { AddCarForm } from "shared/components/AddCarForm/AddCarForm";
+import { hideScroll } from "shared/utils/hideScroll";
 import styles from "./CarPage.module.scss";
 
 export const CarsPage = () => {
@@ -17,6 +18,8 @@ export const CarsPage = () => {
   const dispatch = useDispatch();
   const cars = useSelector(selectCars);
 
+  hideScroll(showModal)
+  
   const onCloseModal = () => {
     setShowModal(false);
   };
@@ -35,11 +38,7 @@ export const CarsPage = () => {
     <section className={styles.section}>
       <div className={styles.wrapper}>
         <PageTitle text="Table of Cars" />
-        <button
-          className={styles.addCarBtn}
-          type="button"
-          onClick={handleModal}
-        >
+        <button type="button" onClick={handleModal}>
           Add car
         </button>
       </div>
