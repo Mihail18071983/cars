@@ -20,7 +20,7 @@
   max-height: calc(100% - 10px);
   border-radius: 20px;
   overflow: hidden;
-  background-color:#fff;
+  background-color: #fff;
   padding: 30px 30px;
 }
 
@@ -35,5 +35,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: aliceblue;
   background-color: blueviolet;
+  &:hover,
+  &:focus {
+    color: var(--grey-font);
+    background-color: var(--dark);
+  }
 }

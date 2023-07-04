@@ -126,7 +126,7 @@ export const AddCarForm = () => {
         />
       </label>
 
-      <button type="submit">Add car</button>
+      <button className={styles.button} type="submit">Add car</button>
     </form>
   );
 };
