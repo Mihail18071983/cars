@@ -3,9 +3,9 @@ import { Modal } from "shared/components/Modal/Modal";
 import { EditCarForm } from "shared/components/EditCar/EditCarForm";
 import { DeleteCar } from "shared/components/DeleteCar/DeleteCar";
 import { hideScroll } from "shared/utils/hideScroll";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import styles from "./CarActions.module.scss"
+import styles from "./CarActions.module.scss";
 
 export const CarActions = ({ id }) => {
   const [showModal, setShowModal] = useState(false);
@@ -20,12 +20,22 @@ export const CarActions = ({ id }) => {
     setShowModal(false);
   };
 
-  hideScroll(showModal)
+  hideScroll(showModal);
 
   return (
     <>
-      <button className={styles.btn} onClick={() => handleModal("edit")}>Edit</button>
-      <button className={styles.btn} onClick={() => handleModal("delete")}>Delete</button>
+      <div className={styles.dropdown}>
+        <button className={styles.dropbtn}>Actions</button>
+        <div className={styles.dropdownContent}>
+          <button className={styles.btn} onClick={() => handleModal("edit")}>
+            Edit
+          </button>
+          <button className={styles.btn} onClick={() => handleModal("delete")}>
+            Delete
+          </button>
+        </div>
+      </div>
+
       {showModal && (
         <Modal close={closeModal}>
           {selectedActionType === "edit" && (
