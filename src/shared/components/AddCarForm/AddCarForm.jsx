@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { customAlphabet } from "nanoid";
-import { PageTitle } from "../PageTitle/PageTitle";
 import { addCar } from "redux/cars/cars.slice";
 import { useDispatch } from "react-redux";
 import styles from "./AddCarForm.module.scss";
@@ -44,7 +43,7 @@ export const AddCarForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <PageTitle text="Add car form" />
+      <h2>Add car</h2>
       <label className={styles.label}>
         Car:
         <input className={styles.input}
