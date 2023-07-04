@@ -101,7 +101,6 @@ export const CarsTable = ({ cars }) => {
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
-            console.log("page", page)
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
