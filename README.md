@@ -15,7 +15,7 @@ You can use the following application for:
 After successfull actions changes will applies.
 Alter reloading page or breaking session changes which you provide will be stored and you will not lose your results.
 
-# Technologies
+## Technologies
 For developing cars appliaction i used react.js and corresponding bibliotekas:
 - for table design, filter and pagination - react table;
 - for state management - redux toolkit;
