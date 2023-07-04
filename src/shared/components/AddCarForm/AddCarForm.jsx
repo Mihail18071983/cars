@@ -30,11 +30,9 @@ export const AddCarForm = () => {
       availability: availability,
     };
 
-    // You can perform further actions with the newCar object, such as sending it to an API or updating your state.
-    console.log(newCar);
     dispatch(addCar(newCar));
 
-    // Reset the form fields
+    
     setCar("");
     setCarModel("");
     setCarColor("");

@@ -1,0 +1,8 @@
+
+.btn {
+  transition: background-color 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  &:hover,
+  &:focus {
+    background-color: var(--dark);
+  }
+}

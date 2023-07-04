@@ -64,8 +64,8 @@ export const EditCarForm = ({ carID, onClose }) => {
         </select>
       </label>
       <div className={styles.wrapper}>
-        <button type="submit">Save</button>
-        <button type="button" onClick={onClose}>
+        <button className={styles.confirm_button} type="submit">Save</button>
+        <button className={styles.cancel_button} type="button" onClick={onClose}>
           Cancel
         </button>
       </div>

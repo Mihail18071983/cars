@@ -26,27 +26,15 @@
   font-size: 16px;
 }
 
-.confirm_button {
+.confirm_button, .cancel_button {
   color: var(--main-light);
   background-color: var(--main-acc);
   transition: background-color 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &:hover,
   &:focus {
+    color:var(--grey-font);
     background-color:var(--dark);
   }
 }
 
-.cancel-button {
-  color: var(--grey-font);
-  background-color: var(--dark);
-  border: 1px solid transparent;
-  transition: background-color 250ms cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-    border-color:var(--grey-font);
-  }
-}

@@ -38,7 +38,7 @@ export const CarsPage = () => {
     <section className={styles.section}>
       <div className={styles.wrapper}>
         <PageTitle text="Table of Cars" />
-        <button type="button" onClick={handleModal}>
+        <button className={styles.button} type="button" onClick={handleModal}>
           Add car
         </button>
       </div>

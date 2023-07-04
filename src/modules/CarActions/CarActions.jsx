@@ -5,6 +5,8 @@ import { DeleteCar } from "shared/components/DeleteCar/DeleteCar";
 import { hideScroll } from "shared/utils/hideScroll";
 import PropTypes from 'prop-types';
 
+import styles from "./CarActions.module.scss"
+
 export const CarActions = ({ id }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedActionType, setSelectedActionType] = useState(null);
@@ -22,8 +24,8 @@ export const CarActions = ({ id }) => {
 
   return (
     <>
-      <button onClick={() => handleModal("edit")}>Edit</button>
-      <button onClick={() => handleModal("delete")}>Delete</button>
+      <button className={styles.btn} onClick={() => handleModal("edit")}>Edit</button>
+      <button className={styles.btn} onClick={() => handleModal("delete")}>Delete</button>
       {showModal && (
         <Modal close={closeModal}>
           {selectedActionType === "edit" && (

@@ -20,3 +20,16 @@
   align-items: center;
   gap:10px;
 }
+
+.confirm_button, .cancel_button {
+  color: var(--main-light);
+  background-color: var(--main-acc);
+  transition: background-color 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  &:hover,
+  &:focus {
+    color:var(--grey-font);
+    background-color:var(--dark);
+  }
+}
+
